@@ -1,160 +1,129 @@
 import java.util.Arrays;
 
-// Problema 2
-class Persoana {
-	private String nume;
-	private int varsta;
-
-	public Persoana() {
-		this.nume = "Iosif";
-		this.varsta = 20;
-	}
-
-	public Persoana(String nume) {
-		this.nume = nume;
-	}
-
-	public Persoana(String nume, int varsta) {
-		this.nume = nume;
-		this.varsta = varsta;
-	}
-}
-
-// Problema 3
-class Numere {
-	private double numar1;
-	private double numar2;
-
-	public Numere(double numar1, double numar2) {
-		this.numar1 = numar1;
-		this.numar2 = numar2;
-	}
-
-	public void calculezMedia() {
-		double media = (numar1 + numar2) / 2;
-		System.out.println("Media numerelor este: " + media);
-	}
-}
-
 public class Tema {
 
-	public static int[] cautElementeComune(int[] tablou1, int[] tablou2) {
-		int[] tablouNou = new int[Math.min(tablou1.length, tablou2.length)]; // Aflu care tablou are dimensiunea mai
-																				// mica si o folosesc pentru a crea un
-																				// tablou care se initializarea automat
-																				// cu 0
-		int indexTablouNou = 0;
-
-		for (int i = 0; i < tablou1.length; i++) { // Parcurg elementele din primul tablou si le compar cu cele din al
-													// doilea
-			for (int j = 0; j < tablou2.length; j++) {
-				if (tablou1[i] == tablou2[j]) {
-					tablouNou[indexTablouNou] = tablou1[i]; // daca gasesc un element identic din primul tablou cu unul
-															// din al doilea tablou il adaug in tabelul pe care l-am
-															// creat
-					indexTablouNou++; // incrementez variabila pentru ca urmatorul element comun sa fie pus pe pozitia
-										// urmatoare
-					break;
-				}
-			}
-		}
-
-		int[] rezultat = new int[indexTablouNou]; // mai creez un tablou in care adaug valorile si elimin elementele de
-													// 0
-
-		for (int i = 0; i < indexTablouNou; i++) {
-			rezultat[i] = tablouNou[i];
-		}
-
-		return rezultat;
-	}
-
-	public static void afluGrupeleDeNumere(int[] tablou1, int numar) {
+	public static double calculezMedia(int[] tablou) {
 		int suma = 0;
-		for (int i = 0; i < tablou1.length; i++) {
-			for (int j = i + 1; j < tablou1.length; j++) {
-				suma = tablou1[i] + tablou1[j];
-				if (suma == numar) {
-					System.out.println("Perechea: " + " (" + tablou1[i] + "," + tablou1[j] + ")");
-				}
-			}
+		for (int i = 0; i < tablou.length; i++) {
+			suma += tablou[i];
 		}
+		double media = suma / tablou.length;
+		return media;
 	}
 
-	public static int[] cautElementeleMaiMari(int[] tablou1) {
-		int[] tablouNou = new int[tablou1.length];
-		int indexTablouNou = 0;
-
-		for (int i = 0; i < tablou1.length; i++) { // Parcurg tabloul primit ca parametru si daca gasesc o valoare peste
-													// 100 o stochez in tablouNou si incrementez variabila
-													// indexTablouNou
-			if (tablou1[i] > 100) {
-				tablouNou[indexTablouNou] = tablou1[i];
-				indexTablouNou++;
-			}
+	public static int[] inversezElementele(int[] tablou) {
+		int[] tablouInversat = new int[tablou.length];
+		// 0 = 4; 1 = 3; 2 = 2; 3 = 1; 4 = 0
+		int i = 0; int j = tablou.length - 1;
+		while (i<tablou.length) { 
+			tablouInversat[i] = tablou[j];
+			i++;
+			j--;
 		}
-
-		int[] rezultat = new int[indexTablouNou];
-
-		for (int i = 0; i < indexTablouNou; i++) { // Creez tabloul rezultat si stochez in el valorile din tablouNou
-													// eliminand elementele 0
-			rezultat[i] = tablouNou[i];
-		}
-
-		return rezultat;
+		return tablouInversat;
 	}
 
-	public static int[] eliminElementeleIdentice(int[] tablou1, int numar) {
-		for (int i = 0; i < tablou1.length; i++) { // Parcurg tabloul si daca vreun element este identic cu numarul
-													// primit parametru il inlocuiesc cu 0
-			if (tablou1[i] == numar) {
-				tablou1[i] = 0;
+	public static int afluNumereInInterval(int[] tablou) {
+		int nrInInterval = 0;
+		for (int i = 0; i < tablou.length; i++) {
+			if ((tablou[i] >= 1) && (tablou[i] <= 100)) {
+				nrInInterval++;
 			}
 		}
+		return nrInInterval;
+	}
 
-		for (int i = 0; i < tablou1.length; i++) { // Parcurg tabloul si cand gasesc un element egal cu 0 il interschimb
-													// cu valoarea care urmeaza
-			for (int j = i + 1; j < tablou1.length; j++) {
-				if (tablou1[i] == 0) {
-					tablou1[i] = tablou1[j];
-					tablou1[j] = 0;
-				}
+	public static int afluNrMax(int[] tablou) {
+		int nrMax = tablou[0]; // initializez cu primul nr din tablou pentru ca daca e zero s-ar putea ca acesta sa nu apartina intervalului
+		for (int i = 0; i < tablou.length; i++) {
+			if (tablou[i] > nrMax) {
+				nrMax = tablou[i];
 			}
 		}
+		return nrMax;
+	}
 
-		return tablou1;
+	public static int calculezNrPare(int[] tablou) {
+		int nrPare = 0;
+		for (int i = 0; i < tablou.length; i++) {
+			if (tablou[i] % 2 == 0) {
+				nrPare++;
+			}
+		}
+		return nrPare;
+	}
+
+	public static int sumaElementelor(int[] tablou) {
+		int suma = 0;
+		for (int i = 0; i < tablou.length; i++) {
+			suma += tablou[i];
+		}
+		return suma;
+	}
+
+	public static int[] creezMetoda(int numarDeElemente, int valoare) {
+		int[] tablou = new int[numarDeElemente];
+		for (int i = 0; i < tablou.length; i++) {
+			tablou[i] = valoare;
+		}
+		return tablou;
+	}
+
+	public static void afisezElementele(int[] tablou) {
+		for (int i = 0; i < tablou.length; i++) {
+			System.out.print(tablou[i] + " ");
+		}
 	}
 
 	public static void main(String[] args) {
-		// Problema 1
-		// Construiti o metoda care primeste ca parametru doua tablouri si returneaza un
-		// nou tablou cu elementele comune din el.
-		int[] tablou1 = { 5, 120, 2, 4, 3, 7, 2 }, tablou2 = { 7, 10, 5, 12, 5, 3 };
-		System.out.println("Rezultatul este: " + Arrays.toString(cautElementeComune(tablou1, tablou2)));
+		int[] tablou = { 5, 8, 5, 0, 2 }, rezultat;
+		int valoare = 0;
 
-		// Problema 3
-		Numere numere = new Numere(1.2, 1.2);
-		numere.calculezMedia();
+		System.out.println("-- Problema 1 --");
 
-		// Problema 4
-		// Construiti o metoda care primeste ca parametru un tablou de numere intregi si
-		// un parametru de tip intreg, reprezentand o anumita valoare. Afisati toate
-		// perechile de elemente din tablou a caror suma este egala cu acea valoare.
-		int numar = 7;
-		System.out.println("Rezultatele sunt: ");
-		afluGrupeleDeNumere(tablou1, numar);
+		for (int i = 0; i < tablou.length; i++) {
+			System.out.print(tablou[i] + " ");
+		}
 
-		// Problema 5
-		// Construiti o metoda care primeste ca parametru un tablou si va returna un nou
-		// tablou format din numerele mai mari decat 100 din tabloul primit ca
-		// parametru.
-		System.out.println("Rezultatul este " + Arrays.toString(cautElementeleMaiMari(tablou1)));
+		System.out.println("");
+		System.out.println("-- Problema 2 --");
 
-		// Problema 6
-		// Construiti o metoda care primeste ca parametru un tablou de numere intregi
-		// distincte si un alt parametru, un numar intreg. Daca acel numar se afla in
-		// tablou va trebui sters din tabloul original
-		numar = 2;
-		System.out.println("Rezultatul este " + Arrays.toString(eliminElementeleIdentice(tablou1, numar)));
+		afisezElementele(tablou);
+
+		System.out.println("");
+		System.out.println("-- Problema 3 --");
+
+		int numarDeElemente = 5;
+		rezultat = creezMetoda(numarDeElemente, 2);
+		System.out.println(Arrays.toString(rezultat));
+
+		System.out.println("-- Problema 4 --");
+
+		valoare = sumaElementelor(tablou);
+		System.out.println("Suma elementelor din tablou este: " + valoare);
+
+		System.out.println("-- Problema 5 --");
+
+		valoare = calculezNrPare(tablou);
+		System.out.println("Exista " + valoare + " numere pare in tablou");
+
+		System.out.println("-- Problema 6 --");
+
+		System.out.println("Numarul maxim din tablou este: " + afluNrMax(tablou));
+
+		System.out.println("-- Problema 7 --");
+
+		valoare = afluNumereInInterval(tablou);
+		System.out.println("Exista " + valoare + " numere in intervalul [1,100]");
+
+		System.out.println("-- Problema 8 --");
+
+		int[] inversulTabloului = inversezElementele(tablou);
+		System.out.println(Arrays.toString(inversulTabloului));
+
+		System.out.println("-- Problema 9 --");
+
+		System.out.println("Media elementelor din tablou este: " + calculezMedia(tablou));
 	}
+
 }
